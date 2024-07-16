@@ -60,15 +60,6 @@ and add this to your code:
 - white
 
 
-#### Truecolors
-
-Colored has support for truecolors where you can specify any arbitrary rgb value.
-
-This feature will only work correctly in terminals which support true colors (i.e. most modern terminals).
-
-You can check if your terminal supports true color by checking the value of the environment variable `$COLORTERM` on your terminal. A value of `truecolor` or `24bit` indicates that it will work.
-
-
 ## Todo
 
 - **More tests ?**
@@ -77,6 +68,7 @@ You can check if your terminal supports true color by checking the value of the 
 - add background color support
 - add style support
 - add truecolors support
+- tet ColoredString can add String to expand the color text in an intuitive way
 
 ## Credits
 This library wouldn't have been the same without the marvelous rust crate [colored](https://github.com/colored-rs/colored).
