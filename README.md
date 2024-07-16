@@ -41,12 +41,19 @@ and add this to your code:
 ```
 
 ## Features
-- just 8 ANSI standard colors yet
-- don't support bright colors yet
-- don't support background color yet
-- don't support truecolors yet
-- don't support style yet
-- test on Linux
+- Just 8 ANSI standard colors yet
+- Great editor support. Completion everywhere. Less time debugging.
+- Don't support bright colors yet
+- Don't support background color yet
+- Don't support truecolors yet
+- Don't support style yet
+- Test on Linux
+
+completion
+
+![completion](https://s2.loli.net/2024/07/16/pVralOUMzcAEgb5.jpg)
+
+
 
 #### Colors:
 
