@@ -20,15 +20,15 @@ Coloring terminal so simple, you already know how to do it!
 
 ## How to use
 
-Add this in your `cjpm.toml`:
+1. Add this in your `cjpm.toml`:
 
 ```toml
 [dependencies]
 terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.0.1" }
 ```
-run `cjpm update` to update `cjpm.lock` file
+2. run `cjpm update` to update cjpm.lock file
 
-and add this to your code:
+3. add this to your code:
 
 ```java
     import terminalcolor.Colorize
