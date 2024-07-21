@@ -380,7 +380,7 @@ public class ColoredString <: ToString {
 }
 // cjlint-ignore -end suppress this stupid warning
 
-interface Colorize {
+public interface Colorize {
     prop colored: ColoredString
 }
 
