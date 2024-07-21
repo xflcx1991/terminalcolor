@@ -15,6 +15,7 @@
 package terminalcolor
 
 import terminalcolor.color.Color
+import terminalcolor.style.Style
 // import std.unittest.testmacro.*
 /**
  * 参考以下文档颜色定义
@@ -207,12 +208,47 @@ class Tests {
     }
 
     @TestCase
-    func testGiveAShow(): Unit {
-
+    func testGiveColorShow(): Unit {
         //循环给出所有颜色的输出
-
         for (item in Color.COLOR) {
             println(item.toString().color(item).toString())
         }
     }
+
+    @TestCase
+    func testGiveStyleShow(): Unit {
+        //循环给出所有单样式的输出
+        for (item in Style.STYLE) {
+            println(item.toString().style(item).toString())
+        }
+    }
+
+    @TestCase
+    func testIsPlain(): Unit {
+        let word = "plain"
+
+        // just color
+        @PowerAssert(word.colored.isPlain() == true)
+        @PowerAssert(word.colored.black().isPlain() == false)
+        @PowerAssert(word.colored.red().isPlain() == false)
+
+        // just style
+        @PowerAssert(word.colored.clear().isPlain() == true)
+        @PowerAssert(word.colored.bold().isPlain() == false)
+        @PowerAssert(word.colored.blink().isPlain() == false)
+        @PowerAssert(word.colored.dimmed().clear().isPlain() == true)
+
+        // color and style for clear
+        @PowerAssert(word.colored.blue().italic().isPlain() == false)
+        @PowerAssert(word.colored.italic().yellow().isPlain() == false)
+        @PowerAssert(word.colored.underline().cyan().clear().isPlain() == true)
+        @PowerAssert(word.colored.green().reversed().clear().isPlain() == true)
+
+        // color and style for clearFgColor
+        @PowerAssert(word.colored.blue().italic().clearFgColor().isPlain() == false)
+        @PowerAssert(word.colored.italic().yellow().clearFgColor().isPlain() == false)
+        @PowerAssert(word.colored.underline().clearFgColor().isPlain() == false)
+        @PowerAssert(word.colored.green().clearFgColor().isPlain() == true)
+    }
+    // TODO 循环给出所有样式的输出
 }

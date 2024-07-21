@@ -77,8 +77,7 @@ class ColorTests {
     }
 
     @TestCase
-    func testColorCOLOR(): Unit {
-        //循环给出所有颜色的输出
+    func testColorSize(): Unit {
         @PowerAssert(16 == Color.COLOR.size)
     }
 }

@@ -14,7 +14,9 @@
 
 package terminalcolor
 
+import std.collection.ArrayList
 import terminalcolor.color.Color
+import terminalcolor.style.Style
 // cjlint-ignore -start !G.OTH.03 suppress this stupid warning
 public class ColoredString <: ToString {
     // The plain text that will have color and style applied to it. 
@@ -27,9 +29,10 @@ public class ColoredString <: ToString {
     // pub bgcolor: Option<Color>,
     /// Any special styling to be applied to the text (see Styles for a list of
     /// available options).
-    // pub style: style::Style,
+    private let style: ArrayList<Style>
     public ColoredString(private let input: String) {
-        fgcolor = None
+        fgcolor = None<Color>
+        style = ArrayList<Style>()
     }
 
     public override func toString(): String {
@@ -58,6 +61,15 @@ public class ColoredString <: ToString {
         let res = StringBuilder("\u{1B}[")
 
         var has_wrote = false
+
+        // 样式
+        for (styleItem in style) {
+            if (has_wrote) {
+                res.append(";")
+            }
+            res.append(styleItem.toStyleString())
+            has_wrote = true
+        }
 
         // 前景色（文字颜色，下统称前景色）
         if (let Some(fgcolor) <- this.fgcolor) {
@@ -92,8 +104,10 @@ public class ColoredString <: ToString {
      */
     func isPlain(): Bool {
         // self.bgcolor.is_none() && self.fgcolor.is_none() && self.style == style::CLEAR
-        return this.fgcolor.isNone()
+        return this.fgcolor.isNone() && this.style.isEmpty()
     }
+
+    // #region fg color
 
     /*cjlint-ignore !G.CHK.04  suppress this stupid warning*/
     /*
@@ -113,7 +127,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-Black 黑色
      *
-     * @return ColoredString 黑色文字
+     * @return ColoredString
      *
      * @example
      * "black".colored.black()
@@ -129,7 +143,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-Red 红色
      *
-     * @return String 红色文字
+     * @return ColoredString
      *
      * @example
      * "red".colored.red()
@@ -145,7 +159,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-Green 绿色
      *
-     * @return String 绿色文字
+     * @return ColoredString
      *
      * @example
      * "green".colored.green()
@@ -161,7 +175,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-Yellow 黄色
      *
-     * @return String 黄色文字
+     * @return ColoredString
      *
      * @example
      * "yellow".colored.yellow()
@@ -177,7 +191,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-Blue 蓝色
      *
-     * @return String 蓝色文字
+     * @return ColoredString
      *
      * @example
      * "blue".colored.blue()
@@ -188,12 +202,12 @@ public class ColoredString <: ToString {
     }
 
     /**
-     * 输出品红色文字
+     * 输出洋红色文字
      * ANSI 值 35
      *
-     * 标准色-Magenta 品红色
+     * 标准色-Magenta 洋红色
      *
-     * @return String 品红色文字
+     * @return ColoredString
      *
      * @example
      * "magenta".colored.magenta()
@@ -209,7 +223,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-Cyan 青色
      *
-     * @return String 青色文字
+     * @return ColoredString
      *
      * @example
      * "cyan".colored.cyan()
@@ -225,7 +239,7 @@ public class ColoredString <: ToString {
      *
      * 标准色-White 白色
      *
-     * @return String 白色文字
+     * @return ColoredString
      *
      * @example
      * "white".colored.white()
@@ -241,7 +255,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightBlack 亮黑色
      *
-     * @return String 亮黑色文字
+     * @return ColoredString
      *
      * @example
      * "brightblack".colored.brightblack()
@@ -257,7 +271,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightRed 亮红色
      *
-     * @return String 亮红色文字
+     * @return ColoredString
      *
      * @example
      * "brightred".colored.brightred()
@@ -273,7 +287,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightGreen 亮绿色
      *
-     * @return String 亮绿色文字
+     * @return ColoredString
      *
      * @example
      * "brightgreen".colored.brightgreen()
@@ -289,7 +303,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightYellow 亮黄色
      *
-     * @return String 亮黄色文字
+     * @return ColoredString
      *
      * @example
      * "brightyellow".colored.brightyellow()
@@ -305,7 +319,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightBlue 亮蓝色
      *
-     * @return String 亮蓝色文字
+     * @return ColoredString
      *
      * @example
      * "brightblue".colored.brightblue()
@@ -316,12 +330,12 @@ public class ColoredString <: ToString {
     }
 
     /**
-     * 输出亮品红色文字
+     * 输出亮洋红色文字
      * ANSI 值 95
      *
-     * 扩展色-BrightMagenta 亮紫色
+     * 扩展色-BrightMagenta 亮洋红色
      *
-     * @return String 亮紫色文字
+     * @return ColoredString
      *
      * @example
      * "brightmagenta".colored.brightmagenta()
@@ -337,7 +351,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightCyan 亮青色
      *
-     * @return String 亮青色文字
+     * @return ColoredString
      *
      * @example
      * "brightcyan".colored.brightcyan()
@@ -353,7 +367,7 @@ public class ColoredString <: ToString {
      *
      * 扩展色-BrightWhite 亮白色
      *
-     * @return String 亮白色文字
+     * @return ColoredString
      *
      * @example
      * "brightwhite".colored.brightwhite()
@@ -364,20 +378,195 @@ public class ColoredString <: ToString {
     }
 
     /**
-     * 为了内部单元测试方便，配合 enum Color遍历检查结果的
-     * 本函数和enum Color暂时考虑不对外公开，减少用户的使用成本
+     * 为了内部单元测试方便，配合 enum Color 遍历检查结果的
+     * 本函数和 enum Color 暂时考虑不对外公开，减少用户的使用成本
      *
-     * @param color Color
+     * @param tmpColor 设置前景色的 Color 枚举值
      * @return ColoredString
      *
      * @example
      * "red".color(Color.Red)
      *
      */
-    protected func color(tmpColor: Color): This {
+    protected func setFgColor(tmpColor: Color): This {
         this.fgcolor = tmpColor
         return this
     }
+
+    /**
+     * 清除前景色
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "clearFgColor".colored.clearFgColor()
+     */
+    public func clearFgColor(): This {
+        this.fgcolor = None<Color>
+        return this
+    }
+    // #endregion fg color
+
+    /**
+     * 清除所有样式，包括前景色
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "clear".colored.clear()
+     */
+    public func clear(): This {
+        this.clearStyle()
+        this.clearFgColor()
+
+        return this
+    }
+
+    // #region style
+
+    /**
+     * 增加粗体样式
+     * ANSI 值 1
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "bold".colored.bold()
+     */
+    public func bold(): This {
+        this.style.append(Style.Bold)
+        return this
+    }
+
+    /**
+     * 增加暗淡样式
+     * ANSI 值 2
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "dim".colored.dimmed()
+     */
+    public func dimmed(): This {
+        this.style.append(Style.Dimmed)
+        return this
+    }
+
+    /**
+     * 增加斜体样式
+     * ANSI 值 3
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "italic".colored.italic()
+     */
+    public func italic(): This {
+        this.style.append(Style.Italic)
+        return this
+    }
+
+    /**
+     * 增加下划线样式
+     * ANSI 值 4
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "underline".colored.underline()
+     */
+    public func underline(): This {
+        this.style.append(Style.Underline)
+        return this
+    }
+
+    /**
+     * 增加闪烁样式
+     * ANSI 值 5
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "blink".colored.blink()
+     */
+    public func blink(): This {
+        this.style.append(Style.Blink)
+        return this
+    }
+
+    /**
+     * 增加反转样式
+     * ANSI 值 7
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "reverse".colored.reverse()
+     */
+    public func reversed(): This {
+        this.style.append(Style.Reversed)
+        return this
+    }
+    /**
+     * 增加隐藏样式
+     * ANSI 值 8
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "hidden".colored.hidden()
+     */
+    public func hidden(): This {
+        this.style.append(Style.Hidden)
+        return this
+    }
+
+    /**
+     * 增加删除线样式
+     * ANSI 值 9
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "delete".colored.delete()
+     */
+    public func strikethrough(): This {
+        this.style.append(Style.Strikethrough)
+        return this
+    }
+
+    /**
+     * 为了内部单元测试方便，配合 enum Style 遍历检查结果的
+     * 本函数和 enum Style 暂时考虑不对外公开，减少用户的使用成本
+     *
+     * @param tmpStyle 传进来的Style枚举值
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "style".style(Style.Bold)
+     *
+     */
+    protected func setStyle(tmpStyle: Style): This {
+        this.style.append(tmpStyle)
+        return this
+    }
+
+    /**
+     * 清除样式
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "clearStyle".colored.clearStyle()
+     */
+    public func clearStyle(): This {
+        this.style.clear()
+        return this
+    }
+
+    // #endregion style
+
 }
 // cjlint-ignore -end suppress this stupid warning
 
@@ -397,7 +586,11 @@ extend String <: Colorize {
     }
     /** 不给用户用，仅供内部方便单元测试用 */
     func color(tmpColor: Color): ColoredString {
-        return ColoredString(this).color(tmpColor)
+        return ColoredString(this).setFgColor(tmpColor)
+    }
+    /** 不给用户用，仅供内部方便单元测试用 */
+    func style(tmpStyle: Style): ColoredString {
+        return ColoredString(this).setStyle(tmpStyle)
     }
 }
 // cjlint-ignore -end suppress this stupid warning
