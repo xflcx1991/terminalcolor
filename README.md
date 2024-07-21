@@ -7,14 +7,22 @@
 Coloring terminal so simple, you already know how to do it!
 
 ```java
-    println("this is balck".colored.black())
-    println("this is red".colored.red())
-    println("this is green".colored.green())
-    println("this is yellow".colored.yellow())
-    println("this is blue".colored.blue())
-    println("this is magenta".colored.magenta())
-    println("this is cyan".colored.cyan())
-    println("this is white".colored.white())
+    println("black".colored.black())
+    println("red".colored.red())
+    println("green".colored.green())
+    println("yellow".colored.yellow())
+    println("blue".colored.blue())
+    println("magenta".colored.magenta())
+    println("cyan".colored.cyan())
+    println("white".colored.white())
+    println("bright black".colored.brightblack())
+    println("bright red".colored.brightred())
+    println("bright green".colored.brightgreen())
+    println("bright yellow".colored.brightyellow())
+    println("bright blue".colored.brightblue())
+    println("bright magenta".colored.brightmagenta())
+    println("bright cyan".colored.brightcyan())
+    println("bright white".colored.brightwhite())
 ```
 
 ![image.png](https://s2.loli.net/2024/07/21/Vyae1DSjqw2kPl3.png)
