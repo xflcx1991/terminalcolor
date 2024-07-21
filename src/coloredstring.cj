@@ -102,6 +102,7 @@ public class ColoredString <: ToString {
      * https://jakob-bagterp.github.io/colorist-for-python/user-guide/materials/ansi-escape-codes/#foreground-text-and-background-colors
      * https://gist.github.com/fnky/458719343aabd01cfb17a3a4f7296797
      * https://www.cnblogs.com/aifengqi/p/15395422.html
+     * https://talyian.github.io/ansicolors/
      * https://bixense.com/clicolors/
      * https://no-color.org/
      */

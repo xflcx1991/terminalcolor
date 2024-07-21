@@ -51,12 +51,12 @@ terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0
 ```
 
 ## Features
-- Just 8 ANSI standard colors yet
+- 4-bit(16) ANSI colors support
 - Great editor support. Completion everywhere. Less time debugging.
-- Don't support bright colors yet
 - Don't support background color yet
-- Don't support truecolors yet
 - Don't support style yet
+- Don't intend to support 256 colors
+- Don't intend to support truecolors
 - Test on Linux、Windows 10 21H2（powershell and cmd）
 
 completion
