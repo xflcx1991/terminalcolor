@@ -1,6 +1,8 @@
 # terminalcolor
 
-[![Crates.io](https://img.shields.io/badge/terminalcolor-0.0.1-2A6FDD)](https://gitcode.com/xffish/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/xffish/terminalcolor/blob/main/LICENSE)
+[![Crates.io](https://img.shields.io/badge/terminalcolor-0.0.4-2A6FDD)](https://gitcode.com/xffish/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/xffish/terminalcolor/blob/main/LICENSE)
+
+> 0.0.2版本有问题，请使用 0.0.4 版本
 
 Coloring terminal so simple, you already know how to do it!
 
@@ -15,7 +17,7 @@ Coloring terminal so simple, you already know how to do it!
     println("this is white".colored.white())
 ```
 
-![goodpoint.png](https://s2.loli.net/2024/07/16/rAZImUpJik1SVQ7.png)
+![image.png](https://s2.loli.net/2024/07/21/Vyae1DSjqw2kPl3.png)
 
 
 ## How to use
@@ -24,7 +26,7 @@ Coloring terminal so simple, you already know how to do it!
 
 ```toml
 [dependencies]
-terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.0.1" }
+terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.0.4" }
 ```
 2. run `cjpm update` to update cjpm.lock file
 
@@ -51,7 +53,7 @@ terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0
 
 completion
 
-![completion](https://s2.loli.net/2024/07/16/pVralOUMzcAEgb5.jpg)
+![image.png](https://s2.loli.net/2024/07/21/falRcn5jKEpquBM.png)
 
 
 
@@ -65,24 +67,30 @@ completion
 - magenta
 - cyan
 - white
+- brightblack
+- brightred
+- brightgreen
+- brightyellow
+- brightblue
+- brightmagenta
+- brightcyan
+- brightwhite
 
 
 ## Todo
 
 - **More tests ?**
-- add windows Macos?(I have no macos machine) support
-- add bright colors support
+- do more test on windows Macos
 - add background color support
 - add style support
-- add truecolors support
-- tet ColoredString can add String to expand the color text in an intuitive way
+- let ColoredString can add String to expand the color text in an intuitive way
 
 ## Credits
 This library wouldn't have been the same without the marvelous rust crate [colored](https://github.com/colored-rs/colored).
 
 
 ## Minimum Supported Cangjie Version (cjnative)
-The current cjnative is `0.54.3`, which has a huge set of changes.
+The current cjnative is `0.53.4`, which has a huge set of changes.
 
 ## License
 
