@@ -14,7 +14,7 @@
 
 internal package terminalcolor.style
 
-protected enum Style <: ToString {
+protected enum Style <: ToString & Equatable<Style> {
     | Bold
     | Dimmed
     | Italic
@@ -25,25 +25,25 @@ protected enum Style <: ToString {
     | Strikethrough
     // 双下划线、上划线等不考虑支持
     // wikipedia 说了支持的不多
-    // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters // cjlint-ignore !G.OTH.03  suppress this stupid warning
+    // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters // cjlint-ignore !G.OTH.03 suppress this stupid warning
 
-    protected static prop STYLE: Array<Style> {
-        get() {
-            return [Style.Bold, Style.Dimmed, Style.Italic, Style.Underline, Style.Blink, Style.Reversed, Style.Hidden,
-                Style.Strikethrough]
-        }
-    }
+    // protected static prop STYLE: Array<Style> {
+    //     get() {
+    //         return [Style.Bold, Style.Dimmed, Style.Italic, Style.Underline, Style.Blink, Style.Reversed, Style.Hidden,
+    //             Style.Strikethrough]
+    //     }
+    // }
 
     public override func toString(): String {
         return match (this) {
-            case Style.Bold => "Bold-code:${this.toStyleString()}"
-            case Style.Dimmed => "Dimmed-code:${this.toStyleString()}"
-            case Style.Italic => "Italic-code:${this.toStyleString()}"
-            case Style.Underline => "Underline-code:${this.toStyleString()}"
-            case Style.Blink => "Blink-code:${this.toStyleString()}"
-            case Style.Reversed => "Reversed-code:${this.toStyleString()}"
-            case Style.Hidden => "Hidden-code:${this.toStyleString()}"
-            case Style.Strikethrough => "Strikethrough-code:${this.toStyleString()}"
+            case Style.Bold => "Bold"
+            case Style.Dimmed => "Dimmed"
+            case Style.Italic => "Italic"
+            case Style.Underline => "Underline"
+            case Style.Blink => "Blink"
+            case Style.Reversed => "Reversed"
+            case Style.Hidden => "Hidden"
+            case Style.Strikethrough => "Strikethrough"
         }
     }
 
@@ -77,4 +77,21 @@ protected enum Style <: ToString {
     }
     // #endregion
 
+    public operator override func ==(rhs: Style): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
+        return match ((this, rhs)) {
+            case (Style.Bold, Style.Bold) => true
+            case (Style.Dimmed, Style.Dimmed) => true
+            case (Style.Italic, Style.Italic) => true
+            case (Style.Underline, Style.Underline) => true
+            case (Style.Blink, Style.Blink) => true
+            case (Style.Reversed, Style.Reversed) => true
+            case (Style.Hidden, Style.Hidden) => true
+            case (Style.Strikethrough, Style.Strikethrough) => true
+            case (_, _) => false
+        }
+    }
+
+    public operator override func !=(rhs: Style): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
+        return !(this == rhs)
+    }
 }

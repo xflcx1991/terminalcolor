@@ -17,10 +17,75 @@ package terminalcolor
 import std.collection.ArrayList
 import terminalcolor.color.Color
 import terminalcolor.style.Style
+
+public enum TerminalColor {
+    | Black
+    | Red
+    | Green
+    | Yellow
+    | Blue
+    | Magenta
+    | Cyan
+    | White
+    | BrightBlack
+    | BrightRed
+    | BrightGreen
+    | BrightYellow
+    | BrightBlue
+    | BrightMagenta
+    | BrightCyan
+    | BrightWhite
+}
+
+func terminalColor2Color(color: TerminalColor): Color {
+    match (color) {
+        case TerminalColor.Black => Color.Black
+        case TerminalColor.Red => Color.Red
+        case TerminalColor.Green => Color.Green
+        case TerminalColor.Yellow => Color.Yellow
+        case TerminalColor.Blue => Color.Blue
+        case TerminalColor.Magenta => Color.Magenta
+        case TerminalColor.Cyan => Color.Cyan
+        case TerminalColor.White => Color.White
+        case TerminalColor.BrightBlack => Color.BrightBlack
+        case TerminalColor.BrightRed => Color.BrightRed
+        case TerminalColor.BrightGreen => Color.BrightGreen
+        case TerminalColor.BrightYellow => Color.BrightYellow
+        case TerminalColor.BrightBlue => Color.BrightBlue
+        case TerminalColor.BrightMagenta => Color.BrightMagenta
+        case TerminalColor.BrightCyan => Color.BrightCyan
+        case TerminalColor.BrightWhite => Color.BrightWhite
+    }
+}
+
+public enum TerminalStyle {
+    | Bold
+    | Dimmed
+    | Italic
+    | Underline
+    | Blink
+    | Reversed
+    | Hidden
+    | Strikethrough
+}
+
+func terminalStyle2Style(style: TerminalStyle): Style {
+    match (style) {
+        case TerminalStyle.Bold => Style.Bold
+        case TerminalStyle.Dimmed => Style.Dimmed
+        case TerminalStyle.Italic => Style.Italic
+        case TerminalStyle.Underline => Style.Underline
+        case TerminalStyle.Blink => Style.Blink
+        case TerminalStyle.Reversed => Style.Reversed
+        case TerminalStyle.Hidden => Style.Hidden
+        case TerminalStyle.Strikethrough => Style.Strikethrough
+    }
+}
+
 // cjlint-ignore -start !G.OTH.03 suppress this stupid warning
 public class ColoredString <: ToString {
     // The plain text that will have color and style applied to it. 
-    // private let input: String
+    private let input: String
 
     /// The color of the text as it will be printed.
     private var fgcolor: Option<Color>
@@ -30,15 +95,40 @@ public class ColoredString <: ToString {
     /// Any special styling to be applied to the text (see Styles for a list of
     /// available options).
     private let style: ArrayList<Style>
-    public ColoredString(private let input: String) {
-        fgcolor = None<Color>
-        style = ArrayList<Style>()
+    public ColoredString(input: String) {
+        this.input = input
+        this.fgcolor = None<Color>
+        this.style = ArrayList<Style>()
     }
 
     public override func toString(): String {
         return this.computeStyle()
     }
+    /*
+    public operator func ==(other: ColoredString): Bool {
+        // 如果fgcolor 不同，用模式匹配来判等
+        match ((this.fgcolor, other.fgcolor)) {
+            case (Some(Color.Black), Some(Color.Black)) | (Some(Color.Red), Some(Color.Red)) | (Some(Color.Green), Some(Color.
+                            Green)) | (Some(Color.Yellow), Some(Color.Yellow)) | (Some(Color.Blue), Some(Color.Blue)) | (Some(Color.
+                            Magenta), Some(Color.Magenta)) | (Some(Color.Cyan), Some(Color.Cyan)) | (Some(Color.White), Some(Color.
+                            White)) | (Some(Color.BrightBlack), Some(Color.BrightBlack)) | (Some(Color.BrightRed), Some(Color.
+                            BrightRed)) | (Some(Color.BrightGreen), Some(Color.BrightGreen)) | (Some(Color.BrightYellow), Some(Color.
+                            BrightYellow)) | (Some(Color.BrightBlue), Some(Color.BrightBlue)) | (Some(Color.
+                            BrightMagenta), Some(Color.BrightMagenta)) | (Some(Color.BrightCyan), Some(Color.BrightCyan)) | (Some(Color.
+                            BrightWhite), Some(Color.BrightWhite)) => true
+            case _ => false
+        }
 
+        // TODO 以后加了bgcolor 再写
+
+        // 如果style 不同
+
+    }
+     */
+    /**
+     * 原来 rust-colored 把style样式设置为数字类型而结构体只存样式的值是为了方便判等
+     * 现在这里不能大改了，只能适应
+     */
     public operator func ==(other: String): Bool {
         return this.computeStyle() == other
     }
@@ -46,7 +136,6 @@ public class ColoredString <: ToString {
     /**
      * 核心代码，转换成最终要输出的颜色样式字符串
      * TODO 暂时不考虑no_color环境变量
-     * TODO 暂时不考虑样式
      * TODO: 暂时不考虑背景色
      *
      * @return String 最终要输出的颜色样式字符串
@@ -567,6 +656,22 @@ public class ColoredString <: ToString {
 
     // #endregion style
 
+    // #region overload ()
+    public operator func ()(color!: TerminalColor): This { // cjlint-ignore !G.OPR.01 just use it
+        this.fgcolor = terminalColor2Color(color)
+        return this
+    }
+
+    public operator func ()(style!: TerminalStyle): This { // cjlint-ignore !G.OPR.01 just use it
+        this.style.append(terminalStyle2Style(style))
+        return this
+    }
+    public operator func ()(color!: TerminalColor, style!: TerminalStyle): This { // cjlint-ignore !G.OPR.01 just use it
+        this.fgcolor = terminalColor2Color(color)
+        this.style.append(terminalStyle2Style(style))
+        return this
+    }
+    // #endregion style
 }
 // cjlint-ignore -end suppress this stupid warning
 
@@ -584,13 +689,19 @@ extend String <: Colorize {
             return ColoredString(this)
         }
     }
-    /** 不给用户用，仅供内部方便单元测试用 */
-    func color(tmpColor: Color): ColoredString {
-        return ColoredString(this).setFgColor(tmpColor)
+
+    /** 让ColoredString 能直接和String判等 */
+    public operator func ==(other: ColoredString): Bool {
+        return this == other.computeStyle()
     }
-    /** 不给用户用，仅供内部方便单元测试用 */
-    func style(tmpStyle: Style): ColoredString {
-        return ColoredString(this).setStyle(tmpStyle)
-    }
+
+    // /** 不给用户用，仅供内部方便单元测试用 */
+    // func color(tmpColor: Color): ColoredString {
+    //     return ColoredString(this).setFgColor(tmpColor)
+    // }
+    // /** 不给用户用，仅供内部方便单元测试用 */
+    // func style(tmpStyle: Style): ColoredString {
+    //     return ColoredString(this).setStyle(tmpStyle)
+    // }
 }
 // cjlint-ignore -end suppress this stupid warning

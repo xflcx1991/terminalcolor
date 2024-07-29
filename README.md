@@ -1,8 +1,9 @@
 # terminalcolor
 
-[![Crates.io](https://img.shields.io/badge/terminalcolor-0.0.5-2A6FDD)](https://gitcode.com/xffish/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/xffish/terminalcolor/blob/main/LICENSE)
+[![Crates.io](https://img.shields.io/badge/terminalcolor-0.1.0-2A6FDD)](https://gitcode.com/xffish/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/xffish/terminalcolor/blob/main/LICENSE)
 
-> 0.0.2版本有问题，请使用 0.0.5 版本
+
+> 0.0.2版本有问题，请使用当前最新版 0.1.0
 
 Coloring terminal so simple, you already know how to do it!
 
@@ -21,10 +22,17 @@ Coloring terminal so simple, you already know how to do it!
     // any order is allowed
     "just work".colored.reversed().strikethrough().brightmagenta()
 ```
-
+```java
+"this is another way to write red and bold".colored(color: TerminalColor.Red, style: TerminalStyle.Bold)
+"only color is ok".colored(color: TerminalColor.Blue)
+"only style is welcome as well".colored(style: TerminalStyle.Underline)
+```
 
 ![image.png](https://s2.loli.net/2024/07/21/NXsyIQkBj2bJiov.png)
 
+This is the effect of all colors and styles.(Hidden style can't be displayed)
+
+![Peek 2024-07-30 00-38.gif](https://s2.loli.net/2024/07/30/TSgY8PkiuOXv5zV.gif)
 
 ## How to use
 
@@ -32,7 +40,7 @@ Coloring terminal so simple, you already know how to do it!
 
 ```toml
 [dependencies]
-terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.0.5" }
+terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.1.0" }
 ```
 2. run `cjpm update` to update cjpm.lock file
 
@@ -51,6 +59,7 @@ terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0
 
 ## Features
 - 4-bit(16) ANSI colors support
+- 8 style support
 - Great editor support. Completion everywhere. Less time debugging.
 - Don't support background color yet
 - Don't intend to support 256 colors

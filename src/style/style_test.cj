@@ -18,14 +18,14 @@ internal package terminalcolor.style
 class StyleTests {
     @TestCase
     func testToString(): Unit {
-        @PowerAssert(Style.Bold.toString() == "Bold-code:1")
-        @PowerAssert(Style.Dimmed.toString() == "Dimmed-code:2")
-        @PowerAssert(Style.Italic.toString() == "Italic-code:3")
-        @PowerAssert(Style.Underline.toString() == "Underline-code:4")
-        @PowerAssert(Style.Blink.toString() == "Blink-code:5")
-        @PowerAssert(Style.Reversed.toString() == "Reversed-code:7")
-        @PowerAssert(Style.Hidden.toString() == "Hidden-code:8")
-        @PowerAssert(Style.Strikethrough.toString() == "Strikethrough-code:9")
+        @PowerAssert(Style.Bold.toString() == "Bold")
+        @PowerAssert(Style.Dimmed.toString() == "Dimmed")
+        @PowerAssert(Style.Italic.toString() == "Italic")
+        @PowerAssert(Style.Underline.toString() == "Underline")
+        @PowerAssert(Style.Blink.toString() == "Blink")
+        @PowerAssert(Style.Reversed.toString() == "Reversed")
+        @PowerAssert(Style.Hidden.toString() == "Hidden")
+        @PowerAssert(Style.Strikethrough.toString() == "Strikethrough")
     }
     @TestCase
     func testToStyleString(): Unit {
@@ -39,8 +39,44 @@ class StyleTests {
         @PowerAssert(Style.Strikethrough.toStyleString() == "9")
     }
 
+    // @TestCase
+    // func testStyleSize(): Unit {
+    //     @PowerAssert(8 == Style.STYLE.size)
+    // }
+
+    /**
+     * 测试 Equal 接口的重载==函数
+     */
     @TestCase
-    func testStyleSize(): Unit {
-        @PowerAssert(8 == Style.STYLE.size)
+    func testEqual(): Unit {
+        @PowerAssert(Style.Bold == Style.Bold)
+        @PowerAssert(Style.Dimmed == Style.Dimmed)
+        @PowerAssert(Style.Italic == Style.Italic)
+        @PowerAssert(Style.Underline == Style.Underline)
+        @PowerAssert(Style.Blink == Style.Blink)
+        @PowerAssert(Style.Reversed == Style.Reversed)
+        @PowerAssert(Style.Hidden == Style.Hidden)
+        @PowerAssert(Style.Strikethrough == Style.Strikethrough)
+
+        @PowerAssert(!(Style.Bold == Style.Dimmed))
+        @PowerAssert(!(Style.Reversed == Style.Italic))
+    }
+
+    /**
+     * 测试 NotEqual 接口的重载!=函数
+     */
+    @TestCase
+    func testNotEqual(): Unit {
+        @PowerAssert((Style.Bold != Style.Dimmed))
+        @PowerAssert((Style.Dimmed != Style.Italic))
+        @PowerAssert((Style.Italic != Style.Underline))
+        @PowerAssert((Style.Underline != Style.Hidden))
+        @PowerAssert((Style.Blink != Style.Reversed))
+        @PowerAssert((Style.Reversed != Style.Bold))
+        @PowerAssert((Style.Hidden != Style.Strikethrough))
+        @PowerAssert((Style.Strikethrough != Style.Bold))
+
+        @PowerAssert(!(Style.Bold != Style.Bold))
+        @PowerAssert(!(Style.Strikethrough != Style.Strikethrough))
     }
 }

@@ -14,7 +14,7 @@
 
 internal package terminalcolor.color
 
-protected enum Color <: ToString {
+protected enum Color <: ToString & Equatable<Color> {
     | Black
     | Red
     | Green
@@ -33,32 +33,32 @@ protected enum Color <: ToString {
     | BrightWhite
     // 不考虑支持256色和真彩色，真的有必要花里胡哨吗
 
-    protected static prop COLOR: Array<Color> {
-        get() {
-            return [Color.Black, Color.Red, Color.Green, Color.Yellow, Color.Blue, Color.Magenta, Color.Cyan,
-                Color.White, Color.BrightBlack, Color.BrightRed, Color.BrightGreen, Color.BrightYellow,
-                Color.BrightBlue, Color.BrightMagenta, Color.BrightCyan, Color.BrightWhite]
-        }
-    }
+    // protected static prop COLOR: Array<Color> {
+    //     get() {
+    //         return [Color.Black, Color.Red, Color.Green, Color.Yellow, Color.Blue, Color.Magenta, Color.Cyan,
+    //             Color.White, Color.BrightBlack, Color.BrightRed, Color.BrightGreen, Color.BrightYellow,
+    //             Color.BrightBlue, Color.BrightMagenta, Color.BrightCyan, Color.BrightWhite]
+    //     }
+    // }
 
     public override func toString(): String {
         return match (this) {
-            case Color.Black => "Black-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.Red => "Red-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.Green => "Green-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.Yellow => "Yellow-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.Blue => "Blue-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.Magenta => "Magenta-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.Cyan => "Cyan-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.White => "White-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightBlack => "BrightBlack-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightRed => "BrightRed-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightGreen => "BrightGreen-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightYellow => "BrightYellow-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightBlue => "BrightBlue-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightMagenta => "BrightMagenta-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightCyan => "BrightCyan-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
-            case Color.BrightWhite => "BrightWhite-fg:${this.toFgStr()}-bg:${this.toBgStr()}"
+            case Color.Black => "Black"
+            case Color.Red => "Red"
+            case Color.Green => "Green"
+            case Color.Yellow => "Yellow"
+            case Color.Blue => "Blue"
+            case Color.Magenta => "Magenta"
+            case Color.Cyan => "Cyan"
+            case Color.White => "White"
+            case Color.BrightBlack => "BrightBlack"
+            case Color.BrightRed => "BrightRed"
+            case Color.BrightGreen => "BrightGreen"
+            case Color.BrightYellow => "BrightYellow"
+            case Color.BrightBlue => "BrightBlue"
+            case Color.BrightMagenta => "BrightMagenta"
+            case Color.BrightCyan => "BrightCyan"
+            case Color.BrightWhite => "BrightWhite"
         }
     }
     // #region color codes
@@ -127,4 +127,30 @@ protected enum Color <: ToString {
         }
     }
     // #endregion
+
+    public operator override func ==(rhs: Color): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
+        return match ((this, rhs)) {
+            case (Color.Black, Color.Black) => true
+            case (Color.Red, Color.Red) => true
+            case (Color.Green, Color.Green) => true
+            case (Color.Yellow, Color.Yellow) => true
+            case (Color.Blue, Color.Blue) => true
+            case (Color.Magenta, Color.Magenta) => true
+            case (Color.Cyan, Color.Cyan) => true
+            case (Color.White, Color.White) => true
+            case (Color.BrightBlack, Color.BrightBlack) => true
+            case (Color.BrightRed, Color.BrightRed) => true
+            case (Color.BrightGreen, Color.BrightGreen) => true
+            case (Color.BrightYellow, Color.BrightYellow) => true
+            case (Color.BrightBlue, Color.BrightBlue) => true
+            case (Color.BrightMagenta, Color.BrightMagenta) => true
+            case (Color.BrightCyan, Color.BrightCyan) => true
+            case (Color.BrightWhite, Color.BrightWhite) => true
+            case (_, _) => false
+        }
+    }
+
+    public operator override func !=(rhs: Color): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
+        return !(this == rhs)
+    }
 }

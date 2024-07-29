@@ -18,22 +18,22 @@ internal package terminalcolor.color
 class ColorTests {
     @TestCase
     func testToString(): Unit {
-        @PowerAssert(Color.Black.toString() == "Black-fg:30-bg:40")
-        @PowerAssert(Color.Red.toString() == "Red-fg:31-bg:41")
-        @PowerAssert(Color.Green.toString() == "Green-fg:32-bg:42")
-        @PowerAssert(Color.Yellow.toString() == "Yellow-fg:33-bg:43")
-        @PowerAssert(Color.Blue.toString() == "Blue-fg:34-bg:44")
-        @PowerAssert(Color.Magenta.toString() == "Magenta-fg:35-bg:45")
-        @PowerAssert(Color.Cyan.toString() == "Cyan-fg:36-bg:46")
-        @PowerAssert(Color.White.toString() == "White-fg:37-bg:47")
-        @PowerAssert(Color.BrightBlack.toString() == "BrightBlack-fg:90-bg:100")
-        @PowerAssert(Color.BrightRed.toString() == "BrightRed-fg:91-bg:101")
-        @PowerAssert(Color.BrightGreen.toString() == "BrightGreen-fg:92-bg:102")
-        @PowerAssert(Color.BrightYellow.toString() == "BrightYellow-fg:93-bg:103")
-        @PowerAssert(Color.BrightBlue.toString() == "BrightBlue-fg:94-bg:104")
-        @PowerAssert(Color.BrightMagenta.toString() == "BrightMagenta-fg:95-bg:105")
-        @PowerAssert(Color.BrightCyan.toString() == "BrightCyan-fg:96-bg:106")
-        @PowerAssert(Color.BrightWhite.toString() == "BrightWhite-fg:97-bg:107")
+        @PowerAssert(Color.Black.toString() == "Black")
+        @PowerAssert(Color.Red.toString() == "Red")
+        @PowerAssert(Color.Green.toString() == "Green")
+        @PowerAssert(Color.Yellow.toString() == "Yellow")
+        @PowerAssert(Color.Blue.toString() == "Blue")
+        @PowerAssert(Color.Magenta.toString() == "Magenta")
+        @PowerAssert(Color.Cyan.toString() == "Cyan")
+        @PowerAssert(Color.White.toString() == "White")
+        @PowerAssert(Color.BrightBlack.toString() == "BrightBlack")
+        @PowerAssert(Color.BrightRed.toString() == "BrightRed")
+        @PowerAssert(Color.BrightGreen.toString() == "BrightGreen")
+        @PowerAssert(Color.BrightYellow.toString() == "BrightYellow")
+        @PowerAssert(Color.BrightBlue.toString() == "BrightBlue")
+        @PowerAssert(Color.BrightMagenta.toString() == "BrightMagenta")
+        @PowerAssert(Color.BrightCyan.toString() == "BrightCyan")
+        @PowerAssert(Color.BrightWhite.toString() == "BrightWhite")
     }
 
     @TestCase
@@ -76,8 +76,60 @@ class ColorTests {
         @PowerAssert(Color.BrightWhite.toBgStr() == "107")
     }
 
+    // @TestCase
+    // func testColorSize(): Unit {
+    //     @PowerAssert(16 == Color.COLOR.size)
+    // }
+
+    /**
+     * 测试 Equal 接口的重载==函数
+     */
     @TestCase
-    func testColorSize(): Unit {
-        @PowerAssert(16 == Color.COLOR.size)
+    func testEqual(): Unit {
+        @PowerAssert(Color.Black == Color.Black)
+        @PowerAssert(Color.Red == Color.Red)
+        @PowerAssert(Color.Green == Color.Green)
+        @PowerAssert(Color.Yellow == Color.Yellow)
+        @PowerAssert(Color.Blue == Color.Blue)
+        @PowerAssert(Color.Magenta == Color.Magenta)
+        @PowerAssert(Color.Cyan == Color.Cyan)
+        @PowerAssert(Color.White == Color.White)
+        @PowerAssert(Color.BrightBlack == Color.BrightBlack)
+        @PowerAssert(Color.BrightRed == Color.BrightRed)
+        @PowerAssert(Color.BrightGreen == Color.BrightGreen)
+        @PowerAssert(Color.BrightYellow == Color.BrightYellow)
+        @PowerAssert(Color.BrightBlue == Color.BrightBlue)
+        @PowerAssert(Color.BrightMagenta == Color.BrightMagenta)
+        @PowerAssert(Color.BrightCyan == Color.BrightCyan)
+        @PowerAssert(Color.BrightWhite == Color.BrightWhite)
+
+        @PowerAssert(!(Color.Black == Color.BrightBlack))
+        @PowerAssert(!(Color.Cyan == Color.BrightBlue))
+    }
+
+    /**
+     * 测试 NotEqual 接口的重载!=函数
+     */
+    @TestCase
+    func testNotEqual(): Unit {
+        @PowerAssert(Color.Black != Color.Red)
+        @PowerAssert(Color.Red != Color.Green)
+        @PowerAssert(Color.Green != Color.Yellow)
+        @PowerAssert(Color.Yellow != Color.Blue)
+        @PowerAssert(Color.Blue != Color.Magenta)
+        @PowerAssert(Color.Magenta != Color.Cyan)
+        @PowerAssert(Color.Cyan != Color.White)
+        @PowerAssert(Color.White != Color.BrightBlack)
+        @PowerAssert(Color.BrightBlack != Color.BrightRed)
+        @PowerAssert(Color.BrightRed != Color.BrightGreen)
+        @PowerAssert(Color.BrightGreen != Color.BrightYellow)
+        @PowerAssert(Color.BrightYellow != Color.BrightBlue)
+        @PowerAssert(Color.BrightBlue != Color.BrightMagenta)
+        @PowerAssert(Color.BrightMagenta != Color.BrightCyan)
+        @PowerAssert(Color.BrightCyan != Color.BrightWhite)
+        @PowerAssert(Color.BrightWhite != Color.Black)
+
+        @PowerAssert(!(Color.Black != Color.Black))
+        @PowerAssert(!(Color.Cyan != Color.Cyan))
     }
 }
