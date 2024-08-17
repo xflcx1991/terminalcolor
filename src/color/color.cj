@@ -14,7 +14,10 @@
 
 internal package terminalcolor.color
 
-protected enum Color <: ToString & Equatable<Color> {
+import std.deriving.Derive
+
+@Derive[Equatable] // cjlint-ignore !G.OPR.01 suppress this stupid warning
+protected enum Color <: ToString {
     | Black
     | Red
     | Green
@@ -128,29 +131,29 @@ protected enum Color <: ToString & Equatable<Color> {
     }
     // #endregion
 
-    public operator override func ==(rhs: Color): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
-        return match ((this, rhs)) {
-            case (Color.Black, Color.Black) => true
-            case (Color.Red, Color.Red) => true
-            case (Color.Green, Color.Green) => true
-            case (Color.Yellow, Color.Yellow) => true
-            case (Color.Blue, Color.Blue) => true
-            case (Color.Magenta, Color.Magenta) => true
-            case (Color.Cyan, Color.Cyan) => true
-            case (Color.White, Color.White) => true
-            case (Color.BrightBlack, Color.BrightBlack) => true
-            case (Color.BrightRed, Color.BrightRed) => true
-            case (Color.BrightGreen, Color.BrightGreen) => true
-            case (Color.BrightYellow, Color.BrightYellow) => true
-            case (Color.BrightBlue, Color.BrightBlue) => true
-            case (Color.BrightMagenta, Color.BrightMagenta) => true
-            case (Color.BrightCyan, Color.BrightCyan) => true
-            case (Color.BrightWhite, Color.BrightWhite) => true
-            case (_, _) => false
-        }
-    }
+    // public operator override func ==(rhs: Color): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
+    //     return match ((this, rhs)) {
+    //         case (Color.Black, Color.Black) => true
+    //         case (Color.Red, Color.Red) => true
+    //         case (Color.Green, Color.Green) => true
+    //         case (Color.Yellow, Color.Yellow) => true
+    //         case (Color.Blue, Color.Blue) => true
+    //         case (Color.Magenta, Color.Magenta) => true
+    //         case (Color.Cyan, Color.Cyan) => true
+    //         case (Color.White, Color.White) => true
+    //         case (Color.BrightBlack, Color.BrightBlack) => true
+    //         case (Color.BrightRed, Color.BrightRed) => true
+    //         case (Color.BrightGreen, Color.BrightGreen) => true
+    //         case (Color.BrightYellow, Color.BrightYellow) => true
+    //         case (Color.BrightBlue, Color.BrightBlue) => true
+    //         case (Color.BrightMagenta, Color.BrightMagenta) => true
+    //         case (Color.BrightCyan, Color.BrightCyan) => true
+    //         case (Color.BrightWhite, Color.BrightWhite) => true
+    //         case (_, _) => false
+    //     }
+    // }
 
-    public operator override func !=(rhs: Color): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
-        return !(this == rhs)
-    }
+    // public operator override func !=(rhs: Color): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
+    //     return !(this == rhs)
+    // }
 }

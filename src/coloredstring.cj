@@ -87,56 +87,62 @@ public class ColoredString <: ToString {
     // The plain text that will have color and style applied to it. 
     private let input: String
 
-    /// The color of the text as it will be printed.
+    // The color of the text as it will be printed.
     private var fgcolor: Option<Color>
-    /// The background color (if any). None means that the text will be printed
-    /// without a special background.
-    // pub bgcolor: Option<Color>,
-    /// Any special styling to be applied to the text (see Styles for a list of
-    /// available options).
+    /* The background color (if any). None means that the text will be printed
+    without a special background.*/
+    private var bgcolor: Option<Color>
+    /* Any special styling to be applied to the text (see Styles for a list of
+    available options).*/
     private let style: ArrayList<Style>
+    private var styleValue: UInt8
+
     public ColoredString(input: String) {
         this.input = input
         this.fgcolor = None<Color>
+        this.bgcolor = None<Color>
         this.style = ArrayList<Style>()
+        this.styleValue = 0u8
     }
 
     public override func toString(): String {
         return this.computeStyle()
     }
     /*
-    public operator func ==(other: ColoredString): Bool {
-        // 如果fgcolor 不同，用模式匹配来判等
-        match ((this.fgcolor, other.fgcolor)) {
-            case (Some(Color.Black), Some(Color.Black)) | (Some(Color.Red), Some(Color.Red)) | (Some(Color.Green), Some(Color.
-                            Green)) | (Some(Color.Yellow), Some(Color.Yellow)) | (Some(Color.Blue), Some(Color.Blue)) | (Some(Color.
-                            Magenta), Some(Color.Magenta)) | (Some(Color.Cyan), Some(Color.Cyan)) | (Some(Color.White), Some(Color.
-                            White)) | (Some(Color.BrightBlack), Some(Color.BrightBlack)) | (Some(Color.BrightRed), Some(Color.
-                            BrightRed)) | (Some(Color.BrightGreen), Some(Color.BrightGreen)) | (Some(Color.BrightYellow), Some(Color.
-                            BrightYellow)) | (Some(Color.BrightBlue), Some(Color.BrightBlue)) | (Some(Color.
-                            BrightMagenta), Some(Color.BrightMagenta)) | (Some(Color.BrightCyan), Some(Color.BrightCyan)) | (Some(Color.
-                            BrightWhite), Some(Color.BrightWhite)) => true
-            case _ => false
+    // 写好了，但是似乎没有用的地方，以后要用的时候给类第一行补上实现 Equatable<ColoredString> 接口
+    public operator override func ==(other: ColoredString): Bool { // cjlint-ignore !G.OPR.01 suppress this stupid warning
+        // fgcolor 不同
+        if (this.fgcolor != other.fgcolor) {
+            return false
         }
+        // bgcolor 不同
+        if (this.bgcolor != other.bgcolor) {
+            return false
+        }
+        // style 不同
+        if (this.styleValue != other.styleValue) {
+            return false
+        }
+        return true
+    }
 
-        // TODO 以后加了bgcolor 再写
-
-        // 如果style 不同
-
+    public operator override func !=(other: ColoredString): Bool { // cjlint-ignore !G.OPR.01 suppress this stupid warning
+        return !(this == other)
     }
      */
+
     /**
      * 原来 rust-colored 把style样式设置为数字类型而结构体只存样式的值是为了方便判等
      * 现在这里不能大改了，只能适应
      */
-    public operator func ==(other: String): Bool {
+    /** 不给用户用，仅供内部方便单元测试用 */
+    operator func ==(other: String): Bool {
         return this.computeStyle() == other
     }
 
     /**
      * 核心代码，转换成最终要输出的颜色样式字符串
      * TODO 暂时不考虑no_color环境变量
-     * TODO: 暂时不考虑背景色
      *
      * @return String 最终要输出的颜色样式字符串
      *
@@ -157,6 +163,16 @@ public class ColoredString <: ToString {
                 res.append(";")
             }
             res.append(styleItem.toStyleString())
+            has_wrote = true
+        }
+
+        // 背景色（文字背景颜色，下统称背景色）
+        if (let Some(bgcolor) <- this.bgcolor) {
+            if (has_wrote) {
+                res.append(";")
+            }
+            res.append(bgcolor.toBgStr())
+
             has_wrote = true
         }
 
@@ -193,12 +209,12 @@ public class ColoredString <: ToString {
      */
     func isPlain(): Bool {
         // self.bgcolor.is_none() && self.fgcolor.is_none() && self.style == style::CLEAR
-        return this.fgcolor.isNone() && this.style.isEmpty()
+        return this.fgcolor.isNone() && this.bgcolor.isNone() && this.style.isEmpty() && this.styleValue == 0
     }
 
     // #region fg color
 
-    /*cjlint-ignore !G.CHK.04  suppress this stupid warning*/
+    /*cjlint-ignore -start !G.OTH.03  suppress this stupid warning*/
     /*
      * 颜色命名参考标准值
      * https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
@@ -347,9 +363,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightblack".colored.brightblack()
+     * "brightblack".colored.brightBlack()
      */
-    public func brightblack(): This {
+    public func brightBlack(): This {
         this.fgcolor = Color.BrightBlack
         return this
     }
@@ -363,9 +379,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightred".colored.brightred()
+     * "brightred".colored.brightRed()
      */
-    public func brightred(): This {
+    public func brightRed(): This {
         this.fgcolor = Color.BrightRed
         return this
     }
@@ -379,9 +395,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightgreen".colored.brightgreen()
+     * "brightgreen".colored.brightGreen()
      */
-    public func brightgreen(): This {
+    public func brightGreen(): This {
         this.fgcolor = Color.BrightGreen
         return this
     }
@@ -395,9 +411,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightyellow".colored.brightyellow()
+     * "brightyellow".colored.brightYellow()
      */
-    public func brightyellow(): This {
+    public func brightYellow(): This {
         this.fgcolor = Color.BrightYellow
         return this
     }
@@ -411,9 +427,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightblue".colored.brightblue()
+     * "brightblue".colored.brightBlue()
      */
-    public func brightblue(): This {
+    public func brightBlue(): This {
         this.fgcolor = Color.BrightBlue
         return this
     }
@@ -427,9 +443,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightmagenta".colored.brightmagenta()
+     * "brightmagenta".colored.brightMagenta()
      */
-    public func brightmagenta(): This {
+    public func brightMagenta(): This {
         this.fgcolor = Color.BrightMagenta
         return this
     }
@@ -443,9 +459,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightcyan".colored.brightcyan()
+     * "brightcyan".colored.brightCyan()
      */
-    public func brightcyan(): This {
+    public func brightCyan(): This {
         this.fgcolor = Color.BrightCyan
         return this
     }
@@ -459,9 +475,9 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "brightwhite".colored.brightwhite()
+     * "brightwhite".colored.brightWhite()
      */
-    public func brightwhite(): This {
+    public func brightWhite(): This {
         this.fgcolor = Color.BrightWhite
         return this
     }
@@ -474,7 +490,7 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "red".color(Color.Red)
+     * "red".colored.setFgColor(Color.Red)
      *
      */
     protected func setFgColor(tmpColor: Color): This {
@@ -496,6 +512,255 @@ public class ColoredString <: ToString {
     }
     // #endregion fg color
 
+    // #region bg color
+    /**
+     * 输出背景色黑色
+     * ANSI 值 40
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBlack()
+     */
+    public func onBlack(): This {
+        this.setBgColor(Color.Black)
+        return this
+    }
+
+    /**
+     * 输出背景色红色
+     * ANSI 值 41
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onRed()
+     */
+    public func onRed(): This {
+        this.setBgColor(Color.Red)
+        return this
+    }
+
+    /**
+     * 输出背景色绿色
+     * ANSI 值 42
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onGreen()
+     */
+    public func onGreen(): This {
+        this.setBgColor(Color.Green)
+        return this
+    }
+    /**
+     * 输出背景色黄色
+     * ANSI 值 43
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onYellow()
+     */
+    public func onYellow(): This {
+        this.setBgColor(Color.Yellow)
+        return this
+    }
+
+    /**
+     * 输出背景色蓝色
+     * ANSI 值 44
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBlue()
+     */
+    public func onBlue(): This {
+        this.setBgColor(Color.Blue)
+        return this
+    }
+    /**
+     * 输出背景色洋红色
+     * ANSI 值 45
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onMagenta()
+     */
+    public func onMagenta(): This {
+        this.setBgColor(Color.Magenta)
+        return this
+    }
+    /**
+     * 输出背景色青色
+     * ANSI 值 46
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onCyan()
+     */
+    public func onCyan(): This {
+        this.setBgColor(Color.Cyan)
+        return this
+    }
+    /**
+     * 输出背景色白色
+     * ANSI 值 47
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onWhite()
+     */
+    public func onWhite(): This {
+        this.setBgColor(Color.White)
+        return this
+    }
+
+    /**
+     * 输出背景色亮黑色
+     * ANSI 值 100
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightBlack()
+     */
+    public func onBrightBlack(): This {
+        this.setBgColor(Color.BrightBlack)
+        return this
+    }
+
+    /**
+     * 输出背景色亮红色
+     * ANSI 值 101
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightRed()
+     */
+    public func onBrightRed(): This {
+        this.setBgColor(Color.BrightRed)
+        return this
+    }
+
+    /**
+     * 输出背景色亮绿色
+     * ANSI 值 102
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightGreen()
+     */
+    public func onBrightGreen(): This {
+        this.setBgColor(Color.BrightGreen)
+        return this
+    }
+
+    /**
+     * 输出背景色亮黄色
+     * ANSI 值 103
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightYellow()
+     */
+    public func onBrightYellow(): This {
+        this.setBgColor(Color.BrightYellow)
+        return this
+    }
+    /**
+     * 输出背景色亮蓝色
+     * ANSI 值 104
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightBlue()
+     */
+    public func onBrightBlue(): This {
+        this.setBgColor(Color.BrightBlue)
+        return this
+    }
+
+    /**
+     * 输出背景色亮洋红色
+     * ANSI 值 105
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightMagenta()
+     */
+    public func onBrightMagenta(): This {
+        this.setBgColor(Color.BrightMagenta)
+        return this
+    }
+
+    /**
+     * 输出背景色亮青色
+     * ANSI 值 106
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightCyan()
+     */
+    public func onBrightCyan(): This {
+        this.setBgColor(Color.BrightCyan)
+        return this
+    }
+
+    /**
+     * 输出背景色亮白色
+     * ANSI 值 107
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "black".colored.onBrightWhite()
+     */
+    public func onBrightWhite(): This {
+        this.setBgColor(Color.BrightWhite)
+        return this
+    }
+
+    /**
+     * 为了内部单元测试方便，配合 enum Color 遍历检查结果的
+     * 本函数和 enum Color 暂时考虑不对外公开，减少用户的使用成本
+     *
+     * @param tmpColor 设置背景色的 Color 枚举值
+     * @return ColoredString
+     *
+     * @example
+     * "red".colored.setBgColor(Color.Red)
+     *
+     */
+    protected func setBgColor(tmpColor: Color): This {
+        this.bgcolor = tmpColor
+        return this
+    }
+    /**
+     * 清除背景色
+     *
+     * @return ColoredString
+     *
+     * @example
+     * "clearBgColor".colored.clearBgColor()
+     */
+    public func clearBgColor(): This {
+        this.bgcolor = None<Color>
+        return this
+    }
+    // #endregion bg color
+
     /**
      * 清除所有样式，包括前景色
      *
@@ -507,6 +772,7 @@ public class ColoredString <: ToString {
     public func clear(): This {
         this.clearStyle()
         this.clearFgColor()
+        this.clearBgColor()
 
         return this
     }
@@ -523,7 +789,7 @@ public class ColoredString <: ToString {
      * "bold".colored.bold()
      */
     public func bold(): This {
-        this.style.append(Style.Bold)
+        this.addStyle(Style.Bold)
         return this
     }
 
@@ -537,7 +803,7 @@ public class ColoredString <: ToString {
      * "dim".colored.dimmed()
      */
     public func dimmed(): This {
-        this.style.append(Style.Dimmed)
+        this.addStyle(Style.Dimmed)
         return this
     }
 
@@ -551,7 +817,7 @@ public class ColoredString <: ToString {
      * "italic".colored.italic()
      */
     public func italic(): This {
-        this.style.append(Style.Italic)
+        this.addStyle(Style.Italic)
         return this
     }
 
@@ -565,7 +831,7 @@ public class ColoredString <: ToString {
      * "underline".colored.underline()
      */
     public func underline(): This {
-        this.style.append(Style.Underline)
+        this.addStyle(Style.Underline)
         return this
     }
 
@@ -579,7 +845,7 @@ public class ColoredString <: ToString {
      * "blink".colored.blink()
      */
     public func blink(): This {
-        this.style.append(Style.Blink)
+        this.addStyle(Style.Blink)
         return this
     }
 
@@ -593,7 +859,7 @@ public class ColoredString <: ToString {
      * "reverse".colored.reverse()
      */
     public func reversed(): This {
-        this.style.append(Style.Reversed)
+        this.addStyle(Style.Reversed)
         return this
     }
     /**
@@ -606,7 +872,7 @@ public class ColoredString <: ToString {
      * "hidden".colored.hidden()
      */
     public func hidden(): This {
-        this.style.append(Style.Hidden)
+        this.addStyle(Style.Hidden)
         return this
     }
 
@@ -617,27 +883,41 @@ public class ColoredString <: ToString {
      * @return ColoredString
      *
      * @example
-     * "delete".colored.delete()
+     * "delete".colored.strikethrough()
      */
     public func strikethrough(): This {
-        this.style.append(Style.Strikethrough)
+        this.addStyle(Style.Strikethrough)
         return this
     }
 
     /**
-     * 为了内部单元测试方便，配合 enum Style 遍历检查结果的
      * 本函数和 enum Style 暂时考虑不对外公开，减少用户的使用成本
      *
      * @param tmpStyle 传进来的Style枚举值
      *
      * @return ColoredString
      *
-     * @example
-     * "style".style(Style.Bold)
+     *
+     */
+    protected func addStyle(tmpStyle: Style): This {
+        this.style.append(tmpStyle)
+        this.styleValue |= tmpStyle.toStyleValue()
+        return this
+    }
+
+    /**
+     * 本函数和 enum Style 暂时考虑不对外公开，减少用户的使用成本
+     *
+     * @param tmpStyle 传进来的Style枚举值
+     *
+     * @return ColoredString
+     *
      *
      */
     protected func setStyle(tmpStyle: Style): This {
-        this.style.append(tmpStyle)
+        this.clearStyle()
+        this.addStyle(tmpStyle)
+
         return this
     }
 
@@ -651,34 +931,62 @@ public class ColoredString <: ToString {
      */
     public func clearStyle(): This {
         this.style.clear()
+        this.styleValue = 0
         return this
     }
 
     // #endregion style
 
-    // #region overload ()
-    public operator func ()(color!: TerminalColor): This { // cjlint-ignore !G.OPR.01 just use it
-        this.fgcolor = terminalColor2Color(color)
+    // #region operator overload
+
+    // cjlint-ignore -start !G.OPR.01 suppress this stupid warning
+
+    // 对，这是前景色
+    public operator func ()(color!: TerminalColor): This {
+        this.colorAndStyle(fgcolor: color, bgcolor: None, style: None)
         return this
     }
 
-    public operator func ()(style!: TerminalStyle): This { // cjlint-ignore !G.OPR.01 just use it
-        this.style.append(terminalStyle2Style(style))
+    public operator func ()(style!: TerminalStyle): This {
+        this.colorAndStyle(fgcolor: None, bgcolor: None, style: style)
+
         return this
     }
-    public operator func ()(color!: TerminalColor, style!: TerminalStyle): This { // cjlint-ignore !G.OPR.01 just use it
-        this.fgcolor = terminalColor2Color(color)
-        this.style.append(terminalStyle2Style(style))
+
+    // 为了兼容性，保留之前已经提供的color命名参数方法，以后再声明废弃再删除
+    public operator func ()(color!: TerminalColor, style!: TerminalStyle): This {
+        this.colorAndStyle(fgcolor: color, bgcolor: None, style: style)
         return this
     }
-    // #endregion style
+
+    public operator func ()(fgcolor!: TerminalColor, bgcolor!: TerminalColor, style!: TerminalStyle): This {
+        this.colorAndStyle(fgcolor: fgcolor, bgcolor: bgcolor, style: style)
+        return this
+    }
+
+    // 为了单元测试用，开个口子不用private
+    internal func colorAndStyle(fgcolor!: ?TerminalColor = None<TerminalColor>,
+        bgcolor!: ?TerminalColor = None<TerminalColor>, style!: ?TerminalStyle = None<TerminalStyle>): This {
+        if (let Some(value) <- fgcolor) {
+            this.fgcolor = terminalColor2Color(value)
+        }
+        if (let Some(value) <- bgcolor) {
+            this.bgcolor = terminalColor2Color(value)
+        }
+        if (let Some(value) <- style) {
+            this.setStyle(terminalStyle2Style(value))
+        }
+        return this
+    }
+
+    // cjlint-ignore -end suppress this stupid warning
+    // #endregion operator overload
 }
-// cjlint-ignore -end suppress this stupid warning
 
 public interface Colorize {
     prop colored: ColoredString
 }
-
+// cjlint-ignore -end suppress this stupid warning
 // 搜索文档“cjlint”“静态检查工具”以了解更多信息
 
 // cjlint-ignore -start !G.ITF.02 suppress this stupid warning
@@ -690,18 +998,17 @@ extend String <: Colorize {
         }
     }
 
-    /** 让ColoredString 能直接和String判等 */
-    public operator func ==(other: ColoredString): Bool {
+    /** 让ColoredString 能直接和String判等
+        不给用户用，仅供内部方便单元测试用
+        不考虑 style的对比问题，仅仅是为了方便单元测试 */
+    // TODO 为什么不让我用 protected？暂时用internal https://gitcode.com/Cangjie/UsersForum/issues/797 // cjlint-ignore !G.OTH.03 suppress this stupid warning
+    operator func ==(other: ColoredString): Bool {
         return this == other.computeStyle()
     }
 
     // /** 不给用户用，仅供内部方便单元测试用 */
     // func color(tmpColor: Color): ColoredString {
     //     return ColoredString(this).setFgColor(tmpColor)
-    // }
-    // /** 不给用户用，仅供内部方便单元测试用 */
-    // func style(tmpStyle: Style): ColoredString {
-    //     return ColoredString(this).setStyle(tmpStyle)
     // }
 }
 // cjlint-ignore -end suppress this stupid warning

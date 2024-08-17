@@ -130,9 +130,9 @@ class ColoredStringTests {
         let word = "bright black"
         let colored_word = "\u{1B}[90m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightblack() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightblack())
-        @PowerAssert(word.colored.brightblack().toString() == colored_word)
+        @PowerAssert(word.colored.brightBlack() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightBlack())
+        @PowerAssert(word.colored.brightBlack().toString() == colored_word)
     }
 
     /**
@@ -143,9 +143,9 @@ class ColoredStringTests {
         let word = "bright red"
         let colored_word = "\u{1B}[91m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightred() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightred())
-        @PowerAssert(word.colored.brightred().toString() == colored_word)
+        @PowerAssert(word.colored.brightRed() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightRed())
+        @PowerAssert(word.colored.brightRed().toString() == colored_word)
     }
 
     /**
@@ -156,9 +156,9 @@ class ColoredStringTests {
         let word = "bright green"
         let colored_word = "\u{1B}[92m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightgreen() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightgreen())
-        @PowerAssert(word.colored.brightgreen().toString() == colored_word)
+        @PowerAssert(word.colored.brightGreen() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightGreen())
+        @PowerAssert(word.colored.brightGreen().toString() == colored_word)
     }
     /**
      * 测试亮黄色
@@ -168,9 +168,9 @@ class ColoredStringTests {
         let word = "bright yellow"
         let colored_word = "\u{1B}[93m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightyellow() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightyellow())
-        @PowerAssert(word.colored.brightyellow().toString() == colored_word)
+        @PowerAssert(word.colored.brightYellow() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightYellow())
+        @PowerAssert(word.colored.brightYellow().toString() == colored_word)
     }
 
     /**
@@ -181,9 +181,9 @@ class ColoredStringTests {
         let word = "bright blue"
         let colored_word = "\u{1B}[94m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightblue() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightblue())
-        @PowerAssert(word.colored.brightblue().toString() == colored_word)
+        @PowerAssert(word.colored.brightBlue() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightBlue())
+        @PowerAssert(word.colored.brightBlue().toString() == colored_word)
     }
 
     /**
@@ -194,9 +194,9 @@ class ColoredStringTests {
         let word = "bright magenta"
         let colored_word = "\u{1B}[95m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightmagenta() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightmagenta())
-        @PowerAssert(word.colored.brightmagenta().toString() == colored_word)
+        @PowerAssert(word.colored.brightMagenta() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightMagenta())
+        @PowerAssert(word.colored.brightMagenta().toString() == colored_word)
     }
 
     /**
@@ -207,9 +207,9 @@ class ColoredStringTests {
         let word = "bright cyan"
         let colored_word = "\u{1B}[96m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightcyan() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightcyan())
-        @PowerAssert(word.colored.brightcyan().toString() == colored_word)
+        @PowerAssert(word.colored.brightCyan() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightCyan())
+        @PowerAssert(word.colored.brightCyan().toString() == colored_word)
     }
 
     /**
@@ -220,14 +220,165 @@ class ColoredStringTests {
         let word = "bright white"
         let colored_word = "\u{1B}[97m${word}\u{1B}[0m"
 
-        @PowerAssert(word.colored.brightwhite() == colored_word)
-        @PowerAssert(colored_word == word.colored.brightwhite())
-        @PowerAssert(word.colored.brightwhite().toString() == colored_word)
+        @PowerAssert(word.colored.brightWhite() == colored_word)
+        @PowerAssert(colored_word == word.colored.brightWhite())
+        @PowerAssert(word.colored.brightWhite().toString() == colored_word)
+    }
+
+    @TestCase
+    func testOnBlack(): Unit {
+        let word = "on black"
+        let colored_word = "\u{1B}[40m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBlack() == colored_word)
+        @PowerAssert(word.colored.onBlack().toString() == colored_word)
+    }
+
+    @TestCase
+    func testOnRed(): Unit {
+        let word = "on red"
+        let colored_word = "\u{1B}[41m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onRed() == colored_word)
+        @PowerAssert(word.colored.onRed().toString() == colored_word)
+    }
+    @TestCase
+    func testOnGreen(): Unit {
+        let word = "on green"
+        let colored_word = "\u{1B}[42m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onGreen() == colored_word)
+        @PowerAssert(word.colored.onGreen().toString() == colored_word)
+    }
+
+    @TestCase
+    func testOnYellow(): Unit {
+        let word = "on yellow"
+        let colored_word = "\u{1B}[43m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onYellow() == colored_word)
+        @PowerAssert(word.colored.onYellow().toString() == colored_word)
+    }
+
+    // 测试背景色蓝色
+    @TestCase
+    func testOnBlue(): Unit {
+        let word = "on blue"
+        let colored_word = "\u{1B}[44m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBlue() == colored_word)
+        @PowerAssert(word.colored.onBlue().toString() == colored_word)
+    }
+    // 测试背景色洋红色
+    @TestCase
+    func testOnMagenta(): Unit {
+        let word = "on magenta"
+        let colored_word = "\u{1B}[45m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onMagenta() == colored_word)
+        @PowerAssert(word.colored.onMagenta().toString() == colored_word)
+    }
+    // 测试背景色青色
+    @TestCase
+    func testOnCyan(): Unit {
+        let word = "on cyan"
+        let colored_word = "\u{1B}[46m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onCyan() == colored_word)
+        @PowerAssert(word.colored.onCyan().toString() == colored_word)
+    }
+    // 测试背景色白色
+    @TestCase
+    func testOnWhite(): Unit {
+        let word = "on white"
+        let colored_word = "\u{1B}[47m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onWhite() == colored_word)
+        @PowerAssert(word.colored.onWhite().toString() == colored_word)
+    }
+    // 测试背景色亮黑色
+    @TestCase
+    func testOnBrightBlack(): Unit {
+        let word = "on bright black"
+        let colored_word = "\u{1B}[100m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightBlack() == colored_word)
+        @PowerAssert(word.colored.onBrightBlack().toString() == colored_word)
+    }
+    // 测试背景色亮红色
+    @TestCase
+    func testOnBrightRed(): Unit {
+        let word = "on bright red"
+        let colored_word = "\u{1B}[101m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightRed() == colored_word)
+        @PowerAssert(word.colored.onBrightRed().toString() == colored_word)
+    }
+
+    // 测试背景色亮绿色
+    @TestCase
+    func testOnBrightGreen(): Unit {
+        let word = "on bright green"
+        let colored_word = "\u{1B}[102m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightGreen() == colored_word)
+        @PowerAssert(word.colored.onBrightGreen().toString() == colored_word)
+    }
+
+    // 测试背景色亮黄色
+    @TestCase
+    func testOnBrightYellow(): Unit {
+        let word = "on bright yellow"
+        let colored_word = "\u{1B}[103m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightYellow() == colored_word)
+        @PowerAssert(word.colored.onBrightYellow().toString() == colored_word)
+    }
+
+    // 测试背景色亮蓝色
+    @TestCase
+    func testOnBrightBlue(): Unit {
+        let word = "on bright blue"
+        let colored_word = "\u{1B}[104m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightBlue() == colored_word)
+        @PowerAssert(word.colored.onBrightBlue().toString() == colored_word)
+    }
+
+    // 测试背景色亮洋红色
+    @TestCase
+    func testOnBrightMagenta(): Unit {
+        let word = "on bright magenta"
+        let colored_word = "\u{1B}[105m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightMagenta() == colored_word)
+        @PowerAssert(word.colored.onBrightMagenta().toString() == colored_word)
+    }
+
+    // 测试背景色亮青色
+    @TestCase
+    func testOnBrightCyan(): Unit {
+        let word = "on bright cyan"
+        let colored_word = "\u{1B}[106m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightCyan() == colored_word)
+        @PowerAssert(word.colored.onBrightCyan().toString() == colored_word)
+    }
+
+    // 测试背景色亮白色
+    @TestCase
+    func testOnBrightWhite(): Unit {
+        let word = "on bright white"
+        let colored_word = "\u{1B}[107m${word}\u{1B}[0m"
+
+        @PowerAssert(word.colored.onBrightWhite() == colored_word)
+        @PowerAssert(word.colored.onBrightWhite().toString() == colored_word)
     }
 
     @TestCase
     func testGiveColorShow(): Unit {
-        //循环给出所有颜色的输出
+        //循环给出所有前景色的输出
+
         let enumTerminalColor = [TerminalColor.Black, TerminalColor.Red, TerminalColor.Green, TerminalColor.Yellow,
             TerminalColor.Blue, TerminalColor.Magenta, TerminalColor.Cyan, TerminalColor.White,
             TerminalColor.BrightBlack, TerminalColor.BrightRed, TerminalColor.BrightGreen, TerminalColor.BrightYellow,
@@ -236,6 +387,27 @@ class ColoredStringTests {
         for (itemColor in enumTerminalColor) {
             let word = "${terminalColor2Color(itemColor)}"
             print(word.colored(color: itemColor))
+            print("\t\t\t")
+            count += 1
+            if (count % 4 == 0) {
+                println()
+            }
+        }
+        println("---------------------------------")
+    }
+
+    @TestCase
+    func testGiveBgcolorShow(): Unit {
+        //循环给出所有背景色的输出
+
+        let enumTerminalColor = [TerminalColor.Black, TerminalColor.Red, TerminalColor.Green, TerminalColor.Yellow,
+            TerminalColor.Blue, TerminalColor.Magenta, TerminalColor.Cyan, TerminalColor.White,
+            TerminalColor.BrightBlack, TerminalColor.BrightRed, TerminalColor.BrightGreen, TerminalColor.BrightYellow,
+            TerminalColor.BrightBlue, TerminalColor.BrightMagenta, TerminalColor.BrightCyan, TerminalColor.BrightWhite]
+        var count = 0
+        for (itemColor in enumTerminalColor) {
+            let word = "${terminalColor2Color(itemColor)}"
+            print(word.colored.colorAndStyle(bgcolor: itemColor))
             print("\t\t\t")
             count += 1
             if (count % 4 == 0) {
@@ -260,7 +432,7 @@ class ColoredStringTests {
 
     @TestCase
     func testGiveColorAndAStyleShow(): Unit {
-        //循环给出所有颜色加一个样式的组合的输出
+        //循环给出所有前景色加一个样式的组合的输出
         let enumTerminalColor = [TerminalColor.Black, TerminalColor.Red, TerminalColor.Green, TerminalColor.Yellow,
             TerminalColor.Blue, TerminalColor.Magenta, TerminalColor.Cyan, TerminalColor.White,
             TerminalColor.BrightBlack, TerminalColor.BrightRed, TerminalColor.BrightGreen, TerminalColor.BrightYellow,
@@ -284,6 +456,34 @@ class ColoredStringTests {
         println("---------------------------------")
     }
 
+    @TestCase
+    func testGiveFgcolorBgcolorAndAStyleShow(): Unit {
+        //循环给出所有前景色背景色加一个样式的组合的输出
+        let enumTerminalColor = [TerminalColor.Black, TerminalColor.Red, TerminalColor.Green, TerminalColor.Yellow,
+            TerminalColor.Blue, TerminalColor.Magenta, TerminalColor.Cyan, TerminalColor.White,
+            TerminalColor.BrightBlack, TerminalColor.BrightRed, TerminalColor.BrightGreen, TerminalColor.BrightYellow,
+            TerminalColor.BrightBlue, TerminalColor.BrightMagenta, TerminalColor.Cyan, TerminalColor.White]
+        let enumTerminalStyle = [TerminalStyle.Bold, TerminalStyle.Dimmed, TerminalStyle.Italic,
+            TerminalStyle.Underline, TerminalStyle.Blink, TerminalStyle.Reversed, TerminalStyle.Hidden,
+            TerminalStyle.Strikethrough]
+        for (fgcolor in enumTerminalColor) {
+            for (bgcolor in enumTerminalColor) {
+                var count = 0
+                for (itemStyle in enumTerminalStyle) {
+                    let word = "${terminalColor2Color(fgcolor)} with ${terminalStyle2Style(itemStyle)}"
+                    print(word.colored(fgcolor: fgcolor, bgcolor: bgcolor, style: itemStyle))
+                    print("\t\t\t")
+                    count += 1
+                    if (count % 4 == 0) {
+                        println()
+                    }
+                }
+                println()
+            }
+        }
+        println("---------------------------------")
+    }
+
     // @TestCase
     // func testGiveColorAndTwoStylesShow(): Unit {
     //     //循环给出所有颜色加两个样式的组合的输出
@@ -292,6 +492,7 @@ class ColoredStringTests {
     //     }
     // }
 
+    // TODO bgcolor need to be tested
     @TestCase
     func testIsPlain(): Unit {
         let word = "plain"

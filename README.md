@@ -1,9 +1,11 @@
 # terminalcolor
 
-[![Crates.io](https://img.shields.io/badge/terminalcolor-0.1.0-2A6FDD)](https://gitcode.com/xffish/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/xffish/terminalcolor/blob/main/LICENSE)
+[![Crates.io](https://img.shields.io/badge/terminalcolor-0.2.0-2A6FDD)](https://gitcode.com/xffish/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/xffish/terminalcolor/blob/main/LICENSE)
 
 
-> 0.0.2版本有问题，请使用当前最新版 0.1.0
+> 不兼容更新警告！从 0.2.0 开始，8个 brightXXX 函数严格遵守大驼峰命名法
+> 例如 brightred -> brightRed
+
 
 Coloring terminal so simple, you already know how to do it!
 

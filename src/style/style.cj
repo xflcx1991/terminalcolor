@@ -14,7 +14,20 @@
 
 internal package terminalcolor.style
 
-protected enum Style <: ToString & Equatable<Style> {
+import std.deriving.Derive
+
+// 用来给ColoredString.style: ArrayList<Style> 计算一个值，方便判断style是否相等
+internal const BOLD: UInt8 = 0b0000_0001
+internal const DIMMED: UInt8 = 0b0000_0010
+internal const ITALIC: UInt8 = 0b0000_0100
+internal const UNDERLINE: UInt8 = 0b0000_1000
+internal const BLINK: UInt8 = 0b0001_0000
+internal const REVERSED: UInt8 = 0b0010_0000
+internal const HIDDEN: UInt8 = 0b0100_0000
+internal const STRIKETHROUGH: UInt8 = 0b1000_0000
+
+@Derive[Equatable] // cjlint-ignore !G.OPR.01 suppress this stupid warning
+protected enum Style <: ToString {
     | Bold
     | Dimmed
     | Italic
@@ -47,6 +60,19 @@ protected enum Style <: ToString & Equatable<Style> {
         }
     }
 
+    protected func toStyleValue(): UInt8 {
+        match (this) {
+            case Style.Bold => BOLD
+            case Style.Dimmed => DIMMED
+            case Style.Italic => ITALIC
+            case Style.Underline => UNDERLINE
+            case Style.Blink => BLINK
+            case Style.Reversed => REVERSED
+            case Style.Hidden => HIDDEN
+            case Style.Strikethrough => STRIKETHROUGH
+        }
+    }
+
     // #region style parameter
     // https://tableconvert.com/zh-cn/excel-to-ascii // cjlint-ignore !G.OTH.03 suppress this stupid warning
     // https://en.wikipedia.org/wiki/ANSI_escape_code#SGR_(Select_Graphic_Rendition)_parameters // cjlint-ignore !G.OTH.03 suppress this stupid warning
@@ -76,22 +102,4 @@ protected enum Style <: ToString & Equatable<Style> {
         }
     }
     // #endregion
-
-    public operator override func ==(rhs: Style): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
-        return match ((this, rhs)) {
-            case (Style.Bold, Style.Bold) => true
-            case (Style.Dimmed, Style.Dimmed) => true
-            case (Style.Italic, Style.Italic) => true
-            case (Style.Underline, Style.Underline) => true
-            case (Style.Blink, Style.Blink) => true
-            case (Style.Reversed, Style.Reversed) => true
-            case (Style.Hidden, Style.Hidden) => true
-            case (Style.Strikethrough, Style.Strikethrough) => true
-            case (_, _) => false
-        }
-    }
-
-    public operator override func !=(rhs: Style): Bool { // cjlint-ignore !G.OPR.01  suppress this stupid warning
-        return !(this == rhs)
-    }
 }

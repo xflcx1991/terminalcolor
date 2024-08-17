@@ -79,4 +79,19 @@ class StyleTests {
         @PowerAssert(!(Style.Bold != Style.Bold))
         @PowerAssert(!(Style.Strikethrough != Style.Strikethrough))
     }
+
+    /**
+     * 测试 toStyleValue 函数
+     */
+    @TestCase
+    func testToStyleValue(): Unit {
+        @PowerAssert(Style.Bold.toStyleValue() == BOLD)
+        @PowerAssert(Style.Dimmed.toStyleValue() == DIMMED)
+        @PowerAssert(Style.Italic.toStyleValue() == ITALIC)
+        @PowerAssert(Style.Underline.toStyleValue() == UNDERLINE)
+        @PowerAssert(Style.Blink.toStyleValue() == BLINK)
+        @PowerAssert(Style.Reversed.toStyleValue() == REVERSED)
+        @PowerAssert(Style.Hidden.toStyleValue() == HIDDEN)
+        @PowerAssert(Style.Strikethrough.toStyleValue() == STRIKETHROUGH)
+    }
 }
