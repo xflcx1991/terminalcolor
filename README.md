@@ -14,23 +14,30 @@ Coloring terminal so simple, you already know how to do it!
     "this is red".colored.red()
     "this is red with bold".colored.red().bold()
     "this is also red with bold".colored.bold().red()
-    "bright colors are welcome as well".colored.brightgreen()
+    "bright colors are welcome as well".colored.brightGreen()
     "you can also make bold comments".colored.bold()
     '${"or use".colored.cyan()} ${"any".colored.italic()} ${"style type".colored.yellow()}'
     "or change advice. This is red".colored.yellow().blue().red()
     "or clear things up. This is default color and style".colored.red().bold().clear()
-    "or just clear color".colored.white().underline().clearFgColor()
+    "or just clear font color".colored.white().underline().clearFgColor()
     "or just clear style".colored.black().blink().clearStyle()
-    // any order is allowed
-    "just work".colored.reversed().strikethrough().brightmagenta()
+    "any order is allowed,it just work".colored.reversed().strikethrough().brightMagenta()
 ```
 ```java
+// need import
+// import terminalcolor.color.Color
+// import terminalcolor.style.Style
 "this is another way to write red and bold".colored(color: TerminalColor.Red, style: TerminalStyle.Bold)
 "only color is ok".colored(color: TerminalColor.Blue)
 "only style is welcome as well".colored(style: TerminalStyle.Underline)
+"font color,background color and style".colored(fgcolor: TerminalColor.Red, bgcolor: TerminalColor.Cyan,
+        style: TerminalStyle.Italic)
 ```
 
-![image.png](https://s2.loli.net/2024/07/21/NXsyIQkBj2bJiov.png)
+
+![图片.png](https://s2.loli.net/2024/08/20/hZL9v6oesixGHJY.png)
+
+![图片.png](https://s2.loli.net/2024/08/20/nk5ptFeTf9RYOuK.png)
 
 This is the effect of all colors and styles.(Hidden style can't be displayed)
 
@@ -42,7 +49,7 @@ This is the effect of all colors and styles.(Hidden style can't be displayed)
 
 ```toml
 [dependencies]
-terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.1.0" }
+terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.2.0" }
 ```
 2. run `cjpm update` to update cjpm.lock file
 
@@ -63,10 +70,9 @@ terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0
 - 4-bit(16) ANSI colors support
 - 8 style support
 - Great editor support. Completion everywhere. Less time debugging.
-- Don't support background color yet
 - Don't intend to support 256 colors
 - Don't intend to support truecolors
-- Test on Linux、Windows 10 21H2（powershell and cmd）
+- Test on Linux、Windows 10 21H2（powershell and cmd）、macOS 11 Big Sur
 
 completion
 
@@ -104,19 +110,13 @@ completion
 - hidden
 - strikethrough
 
-## Todo
-
-- **More tests ?**
-- do more test on windows macOS
-- add background color support
-- let ColoredString can add String to expand the color text in an intuitive way
 
 ## Credits
 This library wouldn't have been the same without the marvelous rust crate [colored](https://github.com/colored-rs/colored).
 
 
 ## Minimum Supported Cangjie Version (cjnative)
-The current cjnative is `0.53.4`, which has a huge set of changes.
+The current cjnative is `0.54.3`.
 
 ## License
 
