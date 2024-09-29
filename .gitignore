@@ -1,3 +1,5 @@
 /.vscode/*
 /.cache/*
 /target/*
+*.log
+/cov_output/*
