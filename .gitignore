@@ -3,3 +3,4 @@
 /target/*
 *.log
 /cov_output/*
+/html
