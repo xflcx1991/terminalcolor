@@ -50,7 +50,7 @@ This is the effect of all colors and styles.(Hidden style can't be displayed)
 
 ```toml
 [dependencies]
-terminalcolor = { git = "https://gitcode.com/xffish/terminalcolor.git", tag = "0.2.0" }
+terminalcolor = { git = "https://gitcode.com/Cangjie-SIG/terminalcolor.git", tag = "0.2.0" }
 ```
 2. run `cjpm update` to update cjpm.lock file
 
