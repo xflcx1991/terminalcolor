@@ -1,7 +1,7 @@
 [dependencies]
 
 [package]
-cjc-version = "0.57.3"
+cjc-version = "0.59.6"
 compile-option = "-O2"
 description = "(Cangjie) Coloring terminal so simple you already know how to do it !"
 link-option = ""

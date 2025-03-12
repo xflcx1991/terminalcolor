@@ -1167,7 +1167,7 @@ public class ColoredString <: ToString {
      *
      */
     protected func addStyle(tmpStyle: Style): This {
-        this.style.append(tmpStyle)
+        this.style.add(tmpStyle)
         this.styleValue |= tmpStyle.toStyleValue()
         return this
     }
