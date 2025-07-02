@@ -3,9 +3,7 @@
 [![Crates.io](https://img.shields.io/badge/terminalcolor-0.2.0-2A6FDD)](https://gitcode.com/Cangjie-SIG/terminalcolor/overview) [![Crates.io](https://img.shields.io/badge/license-MulanPSL2-3DA638)](https://gitcode.com/Cangjie-SIG/terminalcolor/blob/main/LICENSE)
 
 
-> 单元测试在0.55.3全部通过，认为已兼容0.55.3<br/>
-> 单元测试在 0.56.4 和 0.57.3 无法运行，但是分析代码认为可以兼容 0.57.3<br/>
-> https://gitcode.com/Cangjie/UsersForum/issues/1135
+> 单元测试在 1.0.0 全部通过，认为已支持 1.0.0 <br/>
 
 
 Coloring terminal so simple, you already know how to do it!
@@ -117,7 +115,7 @@ This library wouldn't have been the same without the marvelous rust crate [color
 
 
 ## Minimum Supported Cangjie Version (cjnative)
-The current cjnative is `0.57.3`.
+The current cjnative is `1.0.0`.
 
 ## License
 
